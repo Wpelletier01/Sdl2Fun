@@ -39,12 +39,43 @@ int App::init(int width, int height, const char* title) {
     return 0;
 }
 
+void App::close() {
+
+    SDL_FreeSurface( this->surface);
+    this->surface = NULL;
+    SDL_DestroyWindow( this->window );
+    this->window = NULL;
+    SDL_Quit();
+
+    printf("You close the app\n");
+}
+
 
 
 void App::run() {
 
     SDL_FillRect(this->surface,NULL,SDL_MapRGB(this->surface->format,255,255,255));
+    
+    SDL_Surface *img = IMG_Load("../assets/image/testing.jpg");
+
+    if (img == NULL ) {
+        SDL_LogError("Couldnt load image. Error: %s", SDL_GetError());
+    }
+
+    SDL_Rect dst = { .x = 100, .y = 400, .w = 0, .h = 0 };
+
+
+    SDL_BlitSurface(
+        img,
+        NULL,
+        this->surface,
+        &dst
+    );
+
+    
+    
     SDL_UpdateWindowSurface(this->window);
+
 
     SDL_Event event;
 
@@ -70,6 +101,7 @@ void App::run() {
         } 
     }
 
+    this->close();
 }
 
 void App::handle_input(SDL_KeyboardEvent key_event) {

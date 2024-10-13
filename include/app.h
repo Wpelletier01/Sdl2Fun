@@ -10,11 +10,11 @@ class App {
 
         int init(int width, int height, const char* title);
         void run();
-
+        void close();
     private:
 
         void handle_input(SDL_KeyboardEvent key_event);
-
+        
         SDL_Window *window = NULL;
         SDL_Surface *surface = NULL;
         bool running = false;
