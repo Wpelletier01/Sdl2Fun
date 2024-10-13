@@ -15,9 +15,9 @@ file(GLOB_RECURSE HEADERS "include/*.h")
 
 # Required lib
 find_package(SDL2 REQUIRED)
-
+find_package(SDL2_image REQUIRED)
 
 add_executable(fun_sdl main.cpp ${SOURCES} ${HEADERS})
 
 target_include_directories(fun_sdl PUBLIC ${SDL2_INCLUDE_DIRS})
-target_link_libraries(fun_sdl ${SDL2_LIBRARIES})
+target_link_libraries(fun_sdl ${SDL2_LIBRARIES} SDL2_image)
