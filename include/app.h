@@ -19,6 +19,7 @@ class App {
         
         SDL_Window *window = NULL;
         SDL_Surface *surface = NULL;
+        SDL_Renderer *renderer = NULL; 
         bool running = false;
         AssetManager *assetManager = new AssetManager();
 

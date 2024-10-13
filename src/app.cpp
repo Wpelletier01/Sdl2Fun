@@ -30,6 +30,15 @@ int App::init(int width, int height, const char* title) {
         return 1;
     }
 
+    this->renderer = SDL_CreateRenderer(this->window, "main");
+
+    if (this->renderer == NULL) {
+        printf("Couldn't create main renderer. Error: %s",SDL_GetError());
+        return 1;
+    }
+
+    SDL_SetRenderDrawColor(this->renderer,255,255,255,255)
+
     if (this->assetManager->init() > 0) {
         printf("Asset loader failed");
         return 1;
@@ -53,18 +62,14 @@ void App::close() {
 
 
 void App::run() {
-
-    SDL_FillRect(this->surface,NULL,SDL_MapRGB(this->surface->format,255,255,255));
     
-    SDL_UpdateWindowSurface(this->window);
-
-
     SDL_Event event;
-
     this->running = true;
 
     while (this->running) {
-    
+        
+        SDL_RenderClear(renderer)
+
         while( SDL_PollEvent( &event ) ) { 
 
             switch (event.type) {
