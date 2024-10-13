@@ -30,8 +30,8 @@ int App::init(int width, int height, const char* title) {
         return 1;
     }
 
-    if (IMG_Init(IMG_INIT_JPG) == 0) {
-        printf("Couldn't init SDL2_image jpg module");
+    if (this->assetManager->init() > 0) {
+        printf("Asset loader failed");
         return 1;
     }
 
@@ -56,24 +56,6 @@ void App::run() {
 
     SDL_FillRect(this->surface,NULL,SDL_MapRGB(this->surface->format,255,255,255));
     
-    SDL_Surface *img = IMG_Load("../assets/image/testing.jpg");
-
-    if (img == NULL ) {
-        SDL_LogError("Couldnt load image. Error: %s", SDL_GetError());
-    }
-
-    SDL_Rect dst = { .x = 100, .y = 400, .w = 0, .h = 0 };
-
-
-    SDL_BlitSurface(
-        img,
-        NULL,
-        this->surface,
-        &dst
-    );
-
-    
-    
     SDL_UpdateWindowSurface(this->window);
 
 
@@ -89,7 +71,7 @@ void App::run() {
 
                 case SDL_KEYDOWN:
                 case SDL_KEYUP:
-                    this->handle_input(event.key);
+                    this->handleInput(event.key);
                     break; 
                 case SDL_QUIT:
                     this->running = false;
@@ -104,7 +86,7 @@ void App::run() {
     this->close();
 }
 
-void App::handle_input(SDL_KeyboardEvent key_event) {
+void App::handleInput(SDL_KeyboardEvent key_event) {
 
     if (key_event.type == SDL_KEYDOWN) {
 

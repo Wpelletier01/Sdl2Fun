@@ -1,8 +1,10 @@
+#pragma once
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_image.h>
 
-#pragma once
+#include "asset_manager.h"
 
 class App {
 
@@ -13,11 +15,11 @@ class App {
         void close();
     private:
 
-        void handle_input(SDL_KeyboardEvent key_event);
+        void handleInput(SDL_KeyboardEvent key_event);
         
         SDL_Window *window = NULL;
         SDL_Surface *surface = NULL;
         bool running = false;
-
+        AssetManager *assetManager = new AssetManager();
 
 };
