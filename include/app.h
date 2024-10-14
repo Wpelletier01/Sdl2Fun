@@ -15,14 +15,13 @@ class App {
         void close();
 
         // will have is own class
-        SDL_Renderer *renderer = NULL; 
-        
+        SDL_Renderer *renderer = NULL;         
+        AssetManager *assetManager = new AssetManager();
+    
     private:
-
         void handleInput(SDL_KeyboardEvent key_event);
         
         SDL_Window *window = NULL;
         bool running = false;
-        AssetManager *assetManager = new AssetManager();
 
 };
