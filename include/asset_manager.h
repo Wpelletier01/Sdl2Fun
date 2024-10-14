@@ -17,6 +17,7 @@ class AssetManager {
 
         int init(SDL_Renderer* renderer);
 
+        SDL_Texture* getTexture(std::string name);
 
     private:
 
