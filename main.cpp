@@ -7,6 +7,8 @@ const int WIN_HEIGHT = 600;
 
 
 
+// TODO: universalize log error message
+
 
 
 int main() {
