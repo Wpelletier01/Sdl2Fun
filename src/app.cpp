@@ -23,35 +23,35 @@ int App::init(int width, int height, const char* title) {
         return 1;
     }
 
-    this->surface = SDL_GetWindowSurface(this->window);
 
-    if (this->surface == NULL ) {
-        printf("Couldn't retreive surface from window. Error: %s",SDL_GetError());
-        return 1;
-    }
-
-    this->renderer = SDL_CreateRenderer(this->window, "main");
+    // Initialise renderer
+    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
 
     if (this->renderer == NULL) {
-        printf("Couldn't create main renderer. Error: %s",SDL_GetError());
+        printf("Couldn't create renderer. Error: %s\n",SDL_GetError());
         return 1;
     }
 
-    SDL_SetRenderDrawColor(this->renderer,255,255,255,255)
+    SDL_SetRenderDrawColor(this->renderer,255,255,255,255);
 
-    if (this->assetManager->init() > 0) {
+    // SDL_image and asset initiatialisation
+    int imgFlag = IMG_INIT_JPG | IMG_INIT_PNG;
+
+    if (IMG_Init(imgFlag) == 0) {
+        printf("Couldn't initialise SDL_Image");
+        return 1;
+    }
+
+    if (this->assetManager->init(this->renderer) > 0) {
         printf("Asset loader failed");
         return 1;
     }
-
 
     return 0;
 }
 
 void App::close() {
 
-    SDL_FreeSurface( this->surface);
-    this->surface = NULL;
     SDL_DestroyWindow( this->window );
     this->window = NULL;
     SDL_Quit();
@@ -67,9 +67,6 @@ void App::run() {
     this->running = true;
 
     while (this->running) {
-        
-        SDL_RenderClear(renderer)
-
         while( SDL_PollEvent( &event ) ) { 
 
             switch (event.type) {
@@ -84,8 +81,16 @@ void App::run() {
                 default:
                     break;
             }
-
         } 
+
+
+
+        SDL_RenderClear(this->renderer);
+
+        // render stuff;
+
+        SDL_RenderPresent(this->renderer);
+
     }
 
     this->close();
