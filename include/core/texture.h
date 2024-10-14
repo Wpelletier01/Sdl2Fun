@@ -13,8 +13,6 @@ class Texture {
         Texture(const char* fpath, SDL_Renderer* renderer);
         ~Texture();
 
-    private: 
-
         SDL_Texture* mtexture = NULL;
 
 };
