@@ -4,7 +4,8 @@
 Player::Player(std::string sTexture) : Drawable(sTexture)
 {    
 
-    this->changeSize(400,400);
-    this->updateDest(0,0);
+    this->changeSize(128,128);
+    this->updateSrc(0,0);
+    this->updateDest(200,200);
 
 }

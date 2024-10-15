@@ -37,13 +37,11 @@ void Renderer::render(Drawable* drawable, AssetManager* asset_manager)
     int r = SDL_RenderCopy(
         this->mrenderer,
         asset_manager->getTexture(drawable->getTexture()),
-        NULL,
+        drawable->getSource(),
         drawable->getDestination()
     );
 
-    if (r < 0) {
-        SDL_LogError(0,"Can't render, %s", SDL_GetError());
-    }
+
 }
 
 SDL_Renderer* Renderer::getSdlRenderer() 
