@@ -10,10 +10,10 @@ project(fun_sdl)
 include_directories(include)
 
 # Automatically find all source files in the src directory
-file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE SOURCES "src/libgame/*.cpp")
 
 # Automatically find all header files in the include/my_lib directory
-file(GLOB_RECURSE HEADERS "include/*.h" )
+file(GLOB_RECURSE HEADERS "include/libgame/*.h" "include/**/*.hpp" )
 
 # Required lib
 find_package(SDL2 REQUIRED)
@@ -21,5 +21,5 @@ find_package(SDL2_image REQUIRED)
 
 add_executable(fun_sdl main.cpp ${SOURCES} ${HEADERS})
 
-target_include_directories(fun_sdl PUBLIC include ${SDL2_INCLUDE_DIRS})
+target_include_directories(fun_sdl PUBLIC include/libgame include/entt ${SDL2_INCLUDE_DIRS})
 target_link_libraries(fun_sdl ${SDL2_LIBRARIES} SDL2_image)
