@@ -2,8 +2,8 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "core/texture.h"
 #include "declaration.h"
+#include <string>
 #include <map>
 #include <string>
 #include <filesystem>
@@ -17,11 +17,11 @@ class AssetManager {
 
         int init(SDL_Renderer* renderer);
 
-        SDL_Texture* getTexture(std::string name);
+        SDL_Texture* getTexture(std::string name) const;
 
     private:
-
-        std::map<std::string,Texture> textures; 
+        SDL_Texture* load_texture(fs::path fpath, SDL_Renderer* renderer);
+        std::map<std::string,SDL_Texture*> textures; 
 
 
 };

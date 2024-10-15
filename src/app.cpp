@@ -25,14 +25,9 @@ int App::init(int width, int height, const char* title) {
 
 
     // Initialise renderer
-    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
-
-    if (this->renderer == NULL) {
-        printf("Couldn't create renderer. Error: %s\n",SDL_GetError());
+    if (this->renderer.init(this->window) > 0) {
         return 1;
     }
-
-    SDL_SetRenderDrawColor(this->renderer,255,255,255,255);
 
     // SDL_image and asset initiatialisation
     int imgFlag = IMG_INIT_JPG | IMG_INIT_PNG;
@@ -42,10 +37,11 @@ int App::init(int width, int height, const char* title) {
         return 1;
     }
 
-    if (this->assetManager->init(this->renderer) > 0) {
+    if (this->assetManager->init(this->renderer.getSdlRenderer()) > 0) {
         printf("Asset loader failed");
         return 1;
     }
+
 
     return 0;
 }
@@ -66,6 +62,8 @@ void App::run() {
     SDL_Event event;
     this->running = true;
 
+    player = new Player("player");
+    
     while (this->running) {
         while( SDL_PollEvent( &event ) ) { 
 
@@ -84,13 +82,13 @@ void App::run() {
         } 
 
 
-
-        SDL_RenderClear(this->renderer);
+        this->renderer.clear();
 
         // render stuff;
+        this->renderer.render(this->player,this->assetManager);
+       
 
-        SDL_RenderPresent(this->renderer);
-
+        this->renderer.present();
     }
 
     this->close();
