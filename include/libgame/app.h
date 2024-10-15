@@ -6,7 +6,8 @@
 
 #include "asset_manager.h"
 #include "renderer.h"
-#include "player.h"
+#include "entity_manager.h"
+#include "component.h"
 
 class App {
 
@@ -17,20 +18,18 @@ class App {
         ~App();
 
         void run();
-
-        AssetManager *assetManager = new AssetManager();
-    
+ 
     private:
 
         void handleEvent(SDL_Event* event);
         void handleInput(SDL_KeyboardEvent key_event);
+        void update();
         void render();
-
-        SDL_Window *window = NULL;
-        Renderer renderer;        
         
         bool running = false;
-        // entities
-        Player* player;
-
+        SDL_Window *window = NULL;
+        
+        Renderer renderer;  
+        EntityManager entityManager;      
+        
 };

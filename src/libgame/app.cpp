@@ -1,8 +1,8 @@
 #include "app.h"
 
 
-
 int App::init(int width, int height, const char* title) {
+   
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("Couldn't init sdl");
         return 1;                
@@ -25,7 +25,7 @@ int App::init(int width, int height, const char* title) {
 
 
     // Initialise renderer
-    if (this->renderer.init(this->window) > 0) {
+    if (this->renderer.init(this->window,this->entityManager.getRegistry()) > 0) {
         return 1;
     }
 
@@ -34,11 +34,6 @@ int App::init(int width, int height, const char* title) {
 
     if (IMG_Init(imgFlag) == 0) {
         printf("Couldn't initialise SDL_Image");
-        return 1;
-    }
-
-    if (this->assetManager->init(this->renderer.getSdlRenderer()) > 0) {
-        printf("Asset loader failed");
         return 1;
     }
 
@@ -61,15 +56,40 @@ void App::run() {
     
     SDL_Event event;
     this->running = true;
-
-    player = new Player("player");
     
+    entt::entity player = this->entityManager.createPlayer(
+        Position{ 100, 100},
+        Size{ 128, 128},
+        "player",
+        Position{ 0, 0}
+    );
+
+    // for limiting frame rate to 60fps
+    const int fps = 60;
+    const int frameDelay = 1000 / fps;
+    Uint32 frameStart;
+    int frameTime;
+
+
     while (this->running) {
 
+        frameStart = SDL_GetTicks();
+
         this->handleEvent(&event);
+        this->update();
         this->render();
-       
+
+        frameTime = SDL_GetTicks() - frameStart;
+        if (frameDelay > frameTime) {
+            SDL_Delay(frameDelay-frameTime);
+        }
+
     }
+
+}
+
+void App::update()
+{
 
 }
 
@@ -79,7 +99,7 @@ void App::render()
 
     this->renderer.clear();
     // render stuff;
-    this->renderer.render(this->player,this->assetManager);
+    this->renderer.renderAll();
     
     this->renderer.present();
 }
