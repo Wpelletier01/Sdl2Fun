@@ -46,7 +46,7 @@ int App::init(int width, int height, const char* title) {
     return 0;
 }
 
-void App::close() {
+App::~App() {
 
     SDL_DestroyWindow( this->window );
     this->window = NULL;
@@ -65,36 +65,47 @@ void App::run() {
     player = new Player("player");
     
     while (this->running) {
-        while( SDL_PollEvent( &event ) ) { 
 
-            switch (event.type) {
-
-                case SDL_KEYDOWN:
-                case SDL_KEYUP:
-                    this->handleInput(event.key);
-                    break; 
-                case SDL_QUIT:
-                    this->running = false;
-                    break;
-                default:
-                    break;
-            }
-        } 
-
-
-        this->renderer.clear();
-
-        // render stuff;
-        this->renderer.render(this->player,this->assetManager);
+        this->handleEvent(&event);
+        this->render();
        
-
-        this->renderer.present();
     }
 
-    this->close();
 }
 
-void App::handleInput(SDL_KeyboardEvent key_event) {
+
+void App::render()
+{
+
+    this->renderer.clear();
+    // render stuff;
+    this->renderer.render(this->player,this->assetManager);
+    
+    this->renderer.present();
+}
+
+
+void App::handleEvent(SDL_Event* event) 
+{
+
+    while( SDL_PollEvent( event ) ) { 
+        switch (event->type) {
+            case SDL_KEYDOWN:
+            case SDL_KEYUP:
+                this->handleInput(event->key);
+                break; 
+            case SDL_QUIT:
+                this->running = false;
+                break;
+            default:
+                break;
+        }
+    } 
+
+}
+
+void App::handleInput(SDL_KeyboardEvent key_event) 
+{
 
     if (key_event.type == SDL_KEYDOWN) {
 

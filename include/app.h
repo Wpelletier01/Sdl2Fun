@@ -14,15 +14,18 @@ class App {
 
         int init(int width, int height, const char* title);
 
-        
+        ~App();
+
         void run();
-        void close();
 
         AssetManager *assetManager = new AssetManager();
     
     private:
+
+        void handleEvent(SDL_Event* event);
         void handleInput(SDL_KeyboardEvent key_event);
-        
+        void render();
+
         SDL_Window *window = NULL;
         Renderer renderer;        
         
