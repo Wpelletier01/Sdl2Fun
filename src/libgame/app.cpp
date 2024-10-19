@@ -89,6 +89,8 @@ void App::run() {
 void App::update()
 {
 
+
+    this->inputSys.clear();
 }
 
 
@@ -110,7 +112,7 @@ void App::handleEvent(SDL_Event* event)
         switch (event->type) {
             case SDL_KEYDOWN:
             case SDL_KEYUP:
-                this->handleInput(event->key);
+                this->inputSys.handleKeyInput(event->key);
                 break; 
             case SDL_QUIT:
                 this->running = false;
@@ -119,24 +121,5 @@ void App::handleEvent(SDL_Event* event)
                 break;
         }
     } 
-
-}
-
-void App::handleInput(SDL_KeyboardEvent key_event) 
-{
-
-    if (key_event.type == SDL_KEYDOWN) {
-
-        switch( key_event.keysym.sym) {
-
-            case SDLK_ESCAPE:
-                this->running = false;
-                break;
-            default:
-                break;
-
-        }
-    }
-
 
 }

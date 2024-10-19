@@ -8,6 +8,7 @@
 #include "renderer.h"
 #include "entity_manager.h"
 #include "component.h"
+#include "input.h"
 
 class App {
 
@@ -22,7 +23,6 @@ class App {
     private:
 
         void handleEvent(SDL_Event* event);
-        void handleInput(SDL_KeyboardEvent key_event);
         void update();
         void render();
         
@@ -32,4 +32,5 @@ class App {
         Renderer renderer;  
         EntityManager entityManager;      
         
+        InputSystem inputSys;
 };
