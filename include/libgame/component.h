@@ -15,7 +15,13 @@ struct Texture
     SDL_Rect src;  
 };
 
+struct MoveSpeed
+{
+    float s;
+};
+
 struct KeyboardInput
 {
     std::unordered_map<SDL_Keycode,bool> keys;
+    KeyboardInput() = default;
 };

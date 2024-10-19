@@ -9,6 +9,7 @@
 #include "entity_manager.h"
 #include "component.h"
 #include "input.h"
+#include "entt/entt.hpp"
 
 class App {
 
@@ -23,7 +24,7 @@ class App {
     private:
 
         void handleEvent(SDL_Event* event);
-        void update();
+        void update(entt::entity player);
         void render();
         
         bool running = false;

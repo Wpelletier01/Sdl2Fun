@@ -60,7 +60,8 @@ void App::run() {
     entt::entity player = this->entityManager.createEntity();
     this->entityManager.addRectComponent(player,100,100,128,128);
     this->entityManager.addTextureComponent(player,"player",0,0,128,128);
-
+    this->entityManager.addMoveSpeedComponent(player,3.0);
+    this->entityManager.addInputComponent(player);
 
     // for limiting frame rate to 60fps
     const int fps = 60;
@@ -74,7 +75,7 @@ void App::run() {
         frameStart = SDL_GetTicks();
 
         this->handleEvent(&event);
-        this->update();
+        this->update(player);
         this->render();
 
         frameTime = SDL_GetTicks() - frameStart;
@@ -86,10 +87,8 @@ void App::run() {
 
 }
 
-void App::update()
+void App::update(entt::entity player)
 {
-
-
     this->inputSys.clear();
 }
 

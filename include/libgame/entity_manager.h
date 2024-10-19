@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "component.h"
 #include "entt/entt.hpp"
 
@@ -15,7 +16,8 @@ class EntityManager
 
         void addRectComponent(entt::entity entity, int sx, int sy, int sw, int sh);
         void addTextureComponent(entt::entity entity, std::string texId, int x, int y, int w, int h);
-
+        void addMoveSpeedComponent(entt::entity entity, float speed);
+        void addInputComponent(entt::entity entity);
 
         entt::registry* getRegistry();
 
