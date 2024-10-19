@@ -8,13 +8,14 @@ class EntityManager
 {
 
     public:
-        
-        entt::entity createPlayer(
-            Position pos, 
-            Size size,
-            std::string texId, 
-            Position texSrcPos 
-        );
+
+        entt::entity createEntity();
+        void deleteEntity(entt::entity entity);
+
+
+        void addRectComponent(entt::entity entity, int sx, int sy, int sw, int sh);
+        void addTextureComponent(entt::entity entity, std::string texId, int x, int y, int w, int h);
+
 
         entt::registry* getRegistry();
 

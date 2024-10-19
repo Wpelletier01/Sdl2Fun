@@ -3,21 +3,14 @@
 #include <SDL2/SDL.h>
 #include <string>
 
-struct Position 
+
+struct Rect
 {
-    int x;
-    int y;
+    SDL_Rect val;
 };
 
-struct Size
-{
-    int w;
-    int h;
-};
-
-struct Drawable 
+struct Texture 
 {   
-    std::string textureId;
-    SDL_Rect src;
-    SDL_Rect dst;   
+    std::string id;
+    SDL_Rect src;  
 };

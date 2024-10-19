@@ -41,16 +41,17 @@ void Renderer::present()
 
 void Renderer::renderAll()
 {
-    auto view = this->mregistry->view<Drawable>();
+    auto view = this->mregistry->view<Texture,Rect>();
 
     for (auto entity : view) {
-        const auto& drawable = view.get<Drawable>(entity);
+        const auto& texture = view.get<Texture>(entity);
+        const auto& rect = view.get<Rect>(entity);
 
         SDL_RenderCopy(
             this->mrenderer,
-            this->textures[drawable.textureId],
-            &drawable.src,
-            &drawable.dst
+            this->textures[texture.id],
+            &texture.src,
+            &rect.val
         );
 
     }
