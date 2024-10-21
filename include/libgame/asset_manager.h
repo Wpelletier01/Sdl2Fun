@@ -15,5 +15,5 @@ class AssetManager {
 
     public:
         static std::map<std::string,SDL_Texture*> loadTextures(SDL_Renderer* renderer);
-
+        static SDL_Texture* loadSingleTexture(std::string file, SDL_Renderer* renderer);
 };
