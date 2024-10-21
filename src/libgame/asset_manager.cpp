@@ -36,26 +36,28 @@ std::map<std::string,SDL_Texture*> AssetManager::loadTextures(SDL_Renderer* rend
     return textures;
 }
 
-SDL_Texture* AssetManager::loadSingleTexture(std::string file, SDL_Renderer* renderer)
+SDL_Texture* AssetManager::loadSingleTexture(fs::path file, SDL_Renderer* renderer)
 {
 
-    SDL_Surface* surfaceLoad;
-    SDL_Texture* texture;
+    SDL_Surface* surfaceLoad = NULL;
+    SDL_Texture* texture = NULL;
 
     surfaceLoad = IMG_Load(file.c_str());
 
     if (surfaceLoad == NULL) {
-        SDL_LogError(1,"Couldn't load texture '%s'. %s",file.c_str(),SDL_GetError());
+        SDL_LogError(0,"Couldn't load texture '%s'. %s",file.c_str(),SDL_GetError());
+        
         return texture;
     } 
 
     texture = SDL_CreateTextureFromSurface(renderer,surfaceLoad);
 
     if (texture == NULL) {
-        SDL_LogError(1,"Couldn't create texture '%s'. %s",file.c_str(),SDL_GetError());
+        SDL_LogError(0,"Couldn't create texture '%s'. %s",file.c_str(),SDL_GetError());
         return nullptr;
     }
 
+    SDL_Log("load texture: '%s'",file.c_str());
     return texture;
     
 }
