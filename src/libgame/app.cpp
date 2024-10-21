@@ -38,6 +38,7 @@ int App::init(int width, int height, const char* title) {
     }
 
 
+
     return 0;
 }
 
@@ -60,14 +61,15 @@ void App::run() {
     entt::entity player = this->entityManager.createEntity();
     this->entityManager.addRectComponent(player,100,100,128,128);
     this->entityManager.addTextureComponent(player,"player",0,0,128,128);
-    this->entityManager.addMoveSpeedComponent(player,3.0);
-    this->entityManager.addInputComponent(player);
+    this->entityManager.addMoveSpeedComponent(player,10.0);
 
     // for limiting frame rate to 60fps
     const int fps = 60;
     const int frameDelay = 1000 / fps;
     Uint32 frameStart;
     int frameTime;
+
+    World wrld("../assets/world/testing/test.json",this->renderer.getSDLRenderer());
 
 
     while (this->running) {
@@ -76,7 +78,7 @@ void App::run() {
 
         this->handleEvent(&event);
         this->update(player);
-        this->render();
+        this->render(&wrld);
 
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime) {
@@ -88,17 +90,23 @@ void App::run() {
 }
 
 void App::update(entt::entity player)
-{
+{   
+    entt::registry* pregistry = this->entityManager.getRegistry();
+    this->inputSys.update(pregistry);
+    this->moveSys.update(pregistry);
+
+    this->movePlayer(player,pregistry);
+
     this->inputSys.clear();
 }
 
 
-void App::render()
+void App::render(World* world)
 {
 
     this->renderer.clear();
     // render stuff;
-    this->renderer.renderAll();
+    this->renderer.renderAll(world);
     
     this->renderer.present();
 }
@@ -120,5 +128,37 @@ void App::handleEvent(SDL_Event* event)
                 break;
         }
     } 
+
+}
+
+void App::movePlayer(entt::entity player, entt::registry* registry)
+{
+
+    auto& rect = registry->get<Rect>(player);
+    auto& speed = registry->get<MoveSpeed>(player);
+    
+
+    const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
+
+    if (keyboardState[SDL_SCANCODE_A]) {
+        rect.val.x -= speed.s;
+        SDL_Log("move left");
+    } 
+    
+    
+    if (keyboardState[SDL_SCANCODE_W]) {
+        rect.val.y -= speed.s;
+        SDL_Log("move up");
+    }
+    
+    if (keyboardState[SDL_SCANCODE_D]) {
+        rect.val.x += speed.s;
+        SDL_Log("move right");
+    }
+    
+    if (keyboardState[SDL_SCANCODE_S]) {
+        rect.val.y += speed.s;
+        SDL_Log("move down");
+    }
 
 }

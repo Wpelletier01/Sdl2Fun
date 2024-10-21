@@ -8,8 +8,12 @@
 #include "renderer.h"
 #include "entity_manager.h"
 #include "component.h"
-#include "input.h"
+#include "world.h"
+#include "system/input.h"
+#include "system/movement.h"
 #include "entt/entt.hpp"
+
+
 
 class App {
 
@@ -20,18 +24,21 @@ class App {
         ~App();
 
         void run();
- 
+
+
     private:
 
+        void movePlayer(entt::entity player, entt::registry* registry);
         void handleEvent(SDL_Event* event);
         void update(entt::entity player);
-        void render();
+        void render(World* world);
         
         bool running = false;
         SDL_Window *window = NULL;
         
         Renderer renderer;  
         EntityManager entityManager;      
-        
-        InputSystem inputSys;
+        // system
+        Input inputSys;
+        Movement moveSys;
 };
