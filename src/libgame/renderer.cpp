@@ -51,10 +51,9 @@ void Renderer::renderAll(World* world)
     for (int y = 0; y < h; y++) {
         r.y = y*128;
         for (int x = 0; x < w; x++) {
-           // SDL_Log("%d",map[y*w+x]);
             SDL_RenderCopy(
                 this->mrenderer,
-                &tiles[map[y*w+x]],
+                tiles[map[y*w+x]],
                 NULL,
                 &r
             );
