@@ -69,7 +69,7 @@ void App::run() {
     Uint32 frameStart;
     int frameTime;
 
-    World wrld("../assets/world/testing/test.json",this->renderer.getSDLRenderer());
+    World wrld("../assets/world/testing",this->renderer.getSDLRenderer());
 
 
     while (this->running) {
