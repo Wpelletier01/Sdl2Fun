@@ -1,11 +1,13 @@
 #pragma once
 
 #include <map>
+#include <vector>
 #include <SDL2/SDL.h>
 #include <string>
 #include "asset_manager.h"
 #include "component.h"
 #include "entt/entt.hpp"
+#include "world.h"
 
 class Renderer {
 
@@ -15,9 +17,9 @@ class Renderer {
         ~Renderer();
 
         void clear();
-        void renderAll();
+        void renderAll(World* wrld);
         void present();
-
+        SDL_Renderer* getSDLRenderer();
     private:
         SDL_Renderer* mrenderer;
         entt::registry* mregistry;

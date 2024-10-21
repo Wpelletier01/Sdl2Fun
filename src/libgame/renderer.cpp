@@ -39,8 +39,33 @@ void Renderer::present()
     SDL_RenderPresent(this->mrenderer);
 }
 
-void Renderer::renderAll()
+void Renderer::renderAll(World* world)
 {
+    
+    int w = world->getWidth();
+    int h = world->getHeight();
+    std::vector<SDL_Texture*>& tiles = world->getTiles();
+    std::vector<int>& map = world->getMap();
+    SDL_Rect r = SDL_Rect{0,0,128,128};
+
+    for (int y = 0; y < h; y++) {
+        r.y = y*128;
+        for (int x = 0; x < w; x++) {
+           // SDL_Log("%d",map[y*w+x]);
+            SDL_RenderCopy(
+                this->mrenderer,
+                &tiles[map[y*w+x]],
+                NULL,
+                &r
+            );
+
+            r.x = x*128;
+        }
+    }
+    
+
+ 
+ 
     auto view = this->mregistry->view<Texture,Rect>();
 
     for (auto entity : view) {
@@ -56,4 +81,9 @@ void Renderer::renderAll()
 
     }
 
+}
+
+SDL_Renderer* Renderer::getSDLRenderer()
+{
+    return this->mrenderer;
 }
