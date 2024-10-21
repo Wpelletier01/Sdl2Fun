@@ -3,16 +3,18 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <filesystem>
 #include <SDL2/SDL.h>
 #include "nlohmann/json.hpp"
 #include "asset_manager.h"
 
+namespace fs = std::filesystem;
 
 class World
 {
 
     public:
-        World(std::string tilemap, SDL_Renderer* renderer);
+        World(std::string worldDir, SDL_Renderer* renderer);
 
         int getWidth();
         int getHeight();

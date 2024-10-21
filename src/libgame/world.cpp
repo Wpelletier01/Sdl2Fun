@@ -1,13 +1,15 @@
 #include "world.h"
 
-World::World(std::string tilemap, SDL_Renderer* renderer)
-{
+World::World(std::string worldDir, SDL_Renderer* renderer)
+{   
+    fs::path config = fs::path(worldDir) / "test.json";
+
     this->tiles.push_back(NULL);
 
-    std::ifstream input(tilemap);
+    std::ifstream input(config);
 
     if (!input.is_open()) {
-        SDL_LogError(0, "couldn't open tilemap '%s'",tilemap.c_str());
+        SDL_LogError(0, "couldn't open tilemap '%s'",config.c_str());
     }
 
     nlohmann::json data;
@@ -32,7 +34,7 @@ World::World(std::string tilemap, SDL_Renderer* renderer)
     }
 
     for (const auto& t : tilesets) {
-        this->tiles.push_back(AssetManager::loadSingleTexture(t["source"],renderer));
+        this->tiles.push_back(AssetManager::loadSingleTexture(fs::path(worldDir) / t["source"],renderer));
     }
 
     // load layer (only one for now)
@@ -50,7 +52,6 @@ World::World(std::string tilemap, SDL_Renderer* renderer)
         }
     }
 
-    SDL_Log("%d",this->tiles.size());
 
     input.close();
 
