@@ -1,5 +1,5 @@
 set(CMAKE_CXX_COMPILER "clang++")
-set(CMAKE_CXX_FLAGS "-std=c++17 -ggdb3")
+set(CMAKE_CXX_FLAGS "-std=c++17 -ggdb3 -gdwarf-4")
 set (CMAKE_SHARED_LINKER_FLAGS "-v")
 
 cmake_minimum_required(VERSION 3.12)
